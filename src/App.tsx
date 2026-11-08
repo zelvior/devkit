@@ -30,7 +30,7 @@ import { DevUtilsViews } from './components/tools/DevUtilsViews';
 import { SnippetsModal } from './components/modals/SnippetsModal';
 import { DataManagerModal } from './components/modals/DataManagerModal';
 import { LegalModal, LegalTab } from './components/modals/LegalModal';
-import { Menu, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 export default function App() {
   const [themeMode, setThemeMode] = useState<ThemeMode>('system');
@@ -306,16 +306,9 @@ export default function App() {
           onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
         />
 
-        {/* Mobile Header Sub-bar for Sidebar Drawer */}
-        <div className="md:hidden flex items-center justify-between px-3 py-2 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-xs">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="flex items-center gap-2 text-neutral-700 dark:text-neutral-200 font-semibold py-1.5 px-3 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800"
-          >
-            <Menu className="w-4 h-4" />
-            <span>All Utilities (41)</span>
-          </button>
-          {activeToolId && (
+        {/* Mobile Header Sub-bar (back to directory when inside a tool) */}
+        {activeToolId && (
+          <div className="md:hidden flex items-center justify-between px-3 py-2 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-xs">
             <button
               onClick={handleNavigateHome}
               className="flex items-center gap-1 text-neutral-500 hover:text-neutral-900 dark:hover:text-white py-1.5 px-2 font-medium"
@@ -323,8 +316,8 @@ export default function App() {
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Directory</span>
             </button>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Main Workspace Layout */}
         <div className="flex-1 flex w-full max-w-7xl mx-auto">
@@ -344,7 +337,7 @@ export default function App() {
           />
 
           {/* Main Viewport Content */}
-          <main className="flex-1 min-w-0 px-3 sm:px-6 lg:px-8 py-6 w-full max-w-full overflow-x-hidden">
+          <main className={`flex-1 min-w-0 px-3 sm:pr-6 sm:pl-6 lg:pr-8 py-6 overflow-x-hidden ${sidebarOpen ? 'lg:pl-72' : 'lg:pl-16'}`}>
             {currentView === 'not-found' ? (
               <div className="py-16 text-center max-w-md mx-auto space-y-4">
                 <div className="text-4xl font-extrabold font-mono text-neutral-400 dark:text-neutral-600">

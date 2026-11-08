@@ -23,7 +23,11 @@ export function usePWAInstall() {
     setIsIOS(isIOSDevice);
 
     const handleBeforeInstallPrompt = (e: Event) => {
-      e.preventDefault();
+      // NOTE: deliberately do NOT call e.preventDefault(). Suppressing the
+      // default banner without subsequently calling prompt() triggers a
+      // devtools warning ("Banner not shown: ...preventDefault() called").
+      // We keep the event reference so our custom Install button can call
+      // deferredPrompt.prompt() on demand.
       setDeferredPrompt(e as BeforeInstallPromptEvent);
     };
 
@@ -48,13 +52,16 @@ export function usePWAInstall() {
       const { outcome } = await deferredPrompt.userChoice;
       if (outcome === 'accepted') {
         setIsInstalled(true);
-        setDeferredPrompt(null);
         return true;
       }
+      return false;
     } catch (err) {
       console.warn('PWA install prompt error:', err);
+      return false;
+    } finally {
+      // A deferred prompt can only be used once; drop it after the prompt flow ends.
+      setDeferredPrompt(null);
     }
-    return false;
   };
 
   return {

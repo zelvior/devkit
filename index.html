@@ -81,10 +81,25 @@
           req.onsuccess = function(e) {
             var db = e.target.result;
             if (db.objectStoreNames.contains('settings')) {
-              var tx = db.transaction('settings', 'readonly');
-              var getReq = tx.objectStore('settings').get('themeMode');
-              getReq.onsuccess = function() {
-                var mode = getReq.result;
+            var tx = db.transaction('settings', 'readonly');
+            var getReq = tx.objectStore('settings').get('themeMode');
+            getReq.onsuccess = function() {
+              var mode = getReq.result;
+              if (mode === 'light') {
+                document.documentElement.classList.remove('dark');
+              } else if (mode === 'dark') {
+                document.documentElement.classList.add('dark');
+              } else {
+                if (window.matchMedia && !window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                  document.documentElement.classList.remove('dark');
+                } else {
+                  document.documentElement.classList.add('dark');
+                }
+              }
+              // Release this short-lived connection so the app's schema
+              // upgrade (if any) is not blocked by it.
+              db.close();
+            };
                 if (mode === 'light') {
                   document.documentElement.classList.remove('dark');
                 } else if (mode === 'dark') {
@@ -100,6 +115,11 @@
             }
           };
           req.onerror = function() {
+            try {
+              db.close();
+            } catch (e) {
+              // connection never opened; nothing to close
+            }
             if (window.matchMedia && !window.matchMedia('(prefers-color-scheme: dark)').matches) {
               document.documentElement.classList.remove('dark');
             }

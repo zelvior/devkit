@@ -47,7 +47,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
             All Utilities Directory ({TOOLS.length})
           </h2>
           <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
-            Browse the complete 40-tool developer utility catalog.
+            Browse the complete {TOOLS.length}-tool developer utility catalog.
           </p>
         </div>
 
