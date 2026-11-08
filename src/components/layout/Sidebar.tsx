@@ -62,6 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onOpenData,
 }) => {
   const { showToast } = useToast();
+  const isCollapsed = !isOpen;
   const [expandedCategories, setExpandedCategories] = React.useState<Record<string, boolean>>({
     'json-data': true,
     'text-diff': true,
@@ -83,9 +84,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const favoriteTools = TOOLS.filter((t) => favoriteIds.includes(t.id));
   const recentTools = recentIds.map((id) => TOOLS.find((t) => t.id === id)).filter(Boolean) as typeof TOOLS;
 
+  const railClasses = `fixed top-14 bottom-0 left-0 z-30 shrink-0 border-r border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 overflow-y-auto transition-all duration-300 ease-in-out w-72 ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:${isOpen ? 'w-72' : 'w-16'}`;
+
   return (
     <>
       {/* Mobile Backdrop */}
+
       {isOpen && (
         <div
           onClick={onCloseMobile}
@@ -93,14 +97,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
         />
       )}
 
-      <aside
-        className={`fixed md:sticky top-14 bottom-0 left-0 z-30 w-72 shrink-0 border-r border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 overflow-y-auto transition-transform duration-200 ease-in-out ${
-          isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
-        }`}
-      >
+      <aside data-collapsed={isCollapsed} className={railClasses}>
         {/* Mobile Header in Drawer */}
         <div className="flex md:hidden items-center justify-between px-4 py-3 border-b border-neutral-200 dark:border-neutral-800">
-          <span className="font-bold text-xs text-neutral-900 dark:text-neutral-100">All Utilities (41)</span>
+          <span className={`font-bold text-xs text-neutral-900 dark:text-neutral-100 data-[collapsed=true]:md:hidden`}>
+            All Utilities (41)
+          </span>
           <button
             onClick={onCloseMobile}
             className="p-1.5 text-neutral-500 hover:text-neutral-950 dark:hover:text-white rounded-md"
@@ -112,7 +114,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         <div className="p-4 flex flex-col gap-5 text-xs">
           {/* Quick Access Tools & Data */}
-          <div>
+          <div className={`data-[collapsed=true]:md:hidden`}>
             <div className="px-2 mb-1.5 font-semibold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider text-[10px]">
               Workspace Tools
             </div>
@@ -126,7 +128,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   className="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-left text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200/60 dark:hover:bg-neutral-900 transition-colors"
                 >
                   <FileText className="w-3.5 h-3.5 text-neutral-500" />
-                  <span>Saved Snippets</span>
+                  <span className="data-[collapsed=true]:md:hidden">Saved Snippets</span>
                 </button>
               )}
               {onOpenData && (
@@ -138,73 +140,69 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   className="flex items-center gap-2 px-2.5 py-1.5 rounded-md text-left text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200/60 dark:hover:bg-neutral-900 transition-colors"
                 >
                   <Database className="w-3.5 h-3.5 text-neutral-500" />
-                  <span>Data & Backups</span>
+                  <span className="data-[collapsed=true]:md:hidden">Data & Backups</span>
                 </button>
               )}
             </div>
           </div>
 
           {/* Favorites (if any) */}
-          {favoriteTools.length > 0 && (
-            <div>
-              <div className="flex items-center gap-1.5 px-2 mb-2 font-semibold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider text-[10px]">
-                <Star className="w-3 h-3 text-amber-500" />
-                <span>Favorites</span>
-              </div>
-              <div className="flex flex-col gap-0.5">
-                {favoriteTools.map((t) => (
-                  <button
-                    key={t.id}
-                    onClick={() => {
-                      onSelectTool(t.id);
-                      onCloseMobile();
-                    }}
-                    className={`flex items-center justify-between px-2.5 py-1.5 rounded-md text-left transition-colors truncate ${
-                      activeToolId === t.id
-                        ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 font-semibold'
-                        : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200/60 dark:hover:bg-neutral-900'
-                    }`}
-                  >
-                    <span className="truncate">{t.name}</span>
-                  </button>
-                ))}
-              </div>
+          <div className={`data-[collapsed=true]:md:hidden ${favoriteTools.length === 0 ? 'hidden' : ''}`}>
+            <div className="flex items-center gap-1.5 px-2 mb-2 font-semibold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider text-[10px]">
+              <Star className="w-3 h-3 text-amber-500" />
+              <span className="data-[collapsed=true]:md:hidden">Favorites</span>
             </div>
-          )}
+            <div className="flex flex-col gap-0.5">
+              {favoriteTools.map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => {
+                    onSelectTool(t.id);
+                    onCloseMobile();
+                  }}
+                  className={`flex items-center justify-between px-2.5 py-1.5 rounded-md text-left transition-colors truncate ${
+                    activeToolId === t.id
+                      ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 font-semibold'
+                      : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200/60 dark:hover:bg-neutral-900'
+                  }`}
+                >
+                  <span className="truncate data-[collapsed=true]:md:hidden">{t.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
 
           {/* Recently Used (if any) */}
-          {recentTools.length > 0 && (
-            <div>
-              <div className="flex items-center gap-1.5 px-2 mb-2 font-semibold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider text-[10px]">
-                <History className="w-3 h-3 text-neutral-400" />
-                <span>Recently Used</span>
-              </div>
-              <div className="flex flex-col gap-0.5">
-                {recentTools.slice(0, 5).map((t) => (
-                  <button
-                    key={t.id}
-                    onClick={() => {
-                      onSelectTool(t.id);
-                      onCloseMobile();
-                    }}
-                    className={`flex items-center justify-between px-2.5 py-1.5 rounded-md text-left transition-colors truncate ${
-                      activeToolId === t.id
-                        ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 font-semibold'
-                        : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200/60 dark:hover:bg-neutral-900'
-                    }`}
-                  >
-                    <span className="truncate">{t.name}</span>
-                  </button>
-                ))}
-              </div>
+          <div className={`data-[collapsed=true]:md:hidden ${recentTools.length === 0 ? 'hidden' : ''}`}>
+            <div className="flex items-center gap-1.5 px-2 mb-2 font-semibold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider text-[10px]">
+              <History className="w-3 h-3 text-neutral-400" />
+              <span className="data-[collapsed=true]:md:hidden">Recently Used</span>
             </div>
-          )}
+            <div className="flex flex-col gap-0.5">
+              {recentTools.slice(0, 5).map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => {
+                    onSelectTool(t.id);
+                    onCloseMobile();
+                  }}
+                  className={`flex items-center justify-between px-2.5 py-1.5 rounded-md text-left transition-colors truncate ${
+                    activeToolId === t.id
+                      ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 font-semibold'
+                      : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200/60 dark:hover:bg-neutral-900'
+                  }`}
+                >
+                  <span className="truncate data-[collapsed=true]:md:hidden">{t.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
 
           {/* Popular Fast Access */}
-          <div>
+          <div className="data-[collapsed=true]:md:hidden">
             <div className="flex items-center gap-1.5 px-2 mb-2 font-semibold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider text-[10px]">
               <Flame className="w-3 h-3 text-neutral-500" />
-              <span>Popular Utilities</span>
+              <span className="data-[collapsed=true]:md:hidden">Popular Utilities</span>
             </div>
             <div className="flex flex-col gap-0.5">
               {TOOLS.filter((t) => t.isPopular).map((t) => (
@@ -220,7 +218,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200/60 dark:hover:bg-neutral-900'
                   }`}
                 >
-                  <span className="truncate">{t.name}</span>
+                  <span className="truncate data-[collapsed=true]:md:hidden">{t.name}</span>
                 </button>
               ))}
             </div>
@@ -229,7 +227,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           {/* Categories and Tools List */}
           <div>
             <div className="flex items-center justify-between px-2 mb-2 font-semibold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider text-[10px]">
-              <span>Categories ({CATEGORIES.length})</span>
+              <span className="data-[collapsed=true]:md:hidden">Categories ({CATEGORIES.length})</span>
             </div>
             <div className="flex flex-col gap-1">
               {CATEGORIES.map((cat) => {
@@ -252,11 +250,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           onSelectCategory(cat.id);
                           onCloseMobile();
                         }}
-                        className="flex items-center gap-2 flex-1 text-left truncate"
+                        className="flex items-center gap-2 flex-1 text-left"
                       >
                         <IconComponent className="w-3.5 h-3.5 text-neutral-500 shrink-0" />
-                        <span className="truncate">{cat.name}</span>
-                        <span className="text-[10px] text-neutral-400 dark:text-neutral-600 font-mono">
+                        <span className="truncate data-[collapsed=true]:md:hidden">{cat.name}</span>
+                        <span className="text-[10px] text-neutral-400 dark:text-neutral-600 font-mono data-[collapsed=true]:md:hidden">
                           {catTools.length}
                         </span>
                       </button>
@@ -265,7 +263,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           e.stopPropagation();
                           toggleCategoryExpand(cat.id);
                         }}
-                        className="p-1 text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200"
+                        className={`p-1 text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 data-[collapsed=true]:md:hidden`}
                         aria-label="Toggle category list"
                       >
                         {isExpanded ? (
@@ -276,8 +274,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       </button>
                     </div>
 
-                    {/* Sub-tools */}
-                    {isExpanded && (
+                    {/* Sub-tools (hidden when the rail is collapsed) */}
+                    {isExpanded && !isCollapsed && (
                       <div className="ml-4 pl-2 border-l border-neutral-200 dark:border-neutral-800 flex flex-col gap-0.5 mt-0.5 mb-1">
                         {catTools.map((t) => (
                           <button
@@ -304,7 +302,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
 
           {/* PWA & Privacy & Purge Footer in Sidebar */}
-          <div className="mt-auto pt-4 border-t border-neutral-200 dark:border-neutral-800 flex flex-col gap-2">
+          <div className={`mt-auto pt-4 border-t border-neutral-200 dark:border-neutral-800 flex flex-col gap-2 data-[collapsed=true]:md:hidden`}>
             <PWAInstallButton />
             <button
               onClick={handlePurge}
@@ -312,7 +310,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               title="Clear all IndexedDB storage data"
             >
               <Trash2 className="w-3.5 h-3.5 shrink-0" />
-              <span>Purge IndexedDB</span>
+              <span className="data-[collapsed=true]:md:hidden">Purge IndexedDB</span>
             </button>
           </div>
         </div>

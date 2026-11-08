@@ -54,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {onToggleSidebar && (
             <button
               onClick={onToggleSidebar}
-              className="md:hidden p-2 -ml-1 text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white rounded-md transition-colors"
+              className="p-2 -ml-1 text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white rounded-md transition-colors"
               aria-label="Toggle navigation menu"
             >
               <Menu className="w-5 h-5" />

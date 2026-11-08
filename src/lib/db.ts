@@ -85,19 +85,25 @@ function setupStores(db: IDBDatabase) {
   }
 }
 
-export function getDB(forceVersion?: number): Promise<IDBDatabase> {
+export function getDB(): Promise<IDBDatabase> {
   if (typeof window === 'undefined') {
     return Promise.reject(new Error('IndexedDB is only accessible in browser environments'));
   }
 
-  if (dbInstancePromise && !forceVersion) {
+  // Reuse an open connection; schema upgrades are handled idempotently in onupgradeneeded.
+  if (dbInstancePromise) {
     return dbInstancePromise;
   }
 
   dbInstancePromise = new Promise((resolve, reject) => {
     try {
-      // Opening without a version parameter connects at current version (or version 1 on new DB)
-      const request = forceVersion ? indexedDB.open(DB_NAME, forceVersion) : indexedDB.open(DB_NAME);
+      // Open directly at the target schema version. setupStores is guarded by
+      // objectStoreNames.contains(), so it safely creates missing stores on both
+      // fresh databases and upgrades — no reactive version bumping required.
+      // That reactive bump (v1 → v2) was the root cause of the
+      // "database upgrade blocked" error: the bumped open() waits on every
+      // existing connection (including other tabs) before it can run.
+      const request = indexedDB.open(DB_NAME, DB_VERSION);
 
       request.onupgradeneeded = (event) => {
         const db = (event.target as IDBOpenDBRequest).result;
@@ -107,18 +113,8 @@ export function getDB(forceVersion?: number): Promise<IDBDatabase> {
       request.onsuccess = () => {
         const db = request.result;
 
-        // Verify if all required stores actually exist in the opened database
-        const missingStores = Object.values(STORES).filter((store) => !db.objectStoreNames.contains(store));
-        if (missingStores.length > 0) {
-          console.warn('Detected missing IndexedDB stores:', missingStores, 'Upgrading schema version from', db.version, 'to', db.version + 1);
-          db.close();
-          dbInstancePromise = null;
-          // Re-open with bumped version
-          getDB(db.version + 1).then(resolve).catch(reject);
-          return;
-        }
-
         db.onversionchange = () => {
+          // Another tab bumped the schema; release this connection so its upgrade can proceed.
           db.close();
           dbInstancePromise = null;
         };
@@ -132,7 +128,9 @@ export function getDB(forceVersion?: number): Promise<IDBDatabase> {
       };
 
       request.onblocked = () => {
-        console.warn('IndexedDB database upgrade blocked. Close other tabs running Zelvior DevKit.');
+        // Non-fatal: another tab holds the connection open. The upgrade completes
+        // once that tab closes, so keep the promise pending instead of loudly warning.
+        console.log('IndexedDB upgrade blocked by another open tab; it will complete once that tab closes.');
       };
     } catch (err) {
       dbInstancePromise = null;
@@ -156,10 +154,10 @@ async function withTransaction<T>(
     const db = await getDB();
 
     if (!db.objectStoreNames.contains(storeName)) {
-      console.warn(`Object store "${storeName}" missing in active database, forcing migration...`);
+      console.warn(`Object store "${storeName}" missing in active database, reopening schema...`);
       db.close();
       dbInstancePromise = null;
-      const upgradedDb = await getDB(db.version + 1);
+      const upgradedDb = await getDB();
       if (!upgradedDb.objectStoreNames.contains(storeName)) {
         throw new Error(`Store ${storeName} could not be created`);
       }
