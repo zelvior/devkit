@@ -1,0 +1,6 @@
+{
+  "name": "Zelvior DevKit",
+  "description": "Privacy-first, browser-based developer utilities platform by Zelvior Labs with 41 fast tools that run entirely on the client.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

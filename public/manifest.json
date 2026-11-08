@@ -1,0 +1,33 @@
+{
+  "id": "/",
+  "name": "Zelvior DevKit",
+  "short_name": "DevKit",
+  "description": "Privacy-first browser-based developer utilities platform by Zelvior Labs.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#09090b",
+  "background_color": "#09090b",
+  "categories": ["developer", "utilities", "productivity"],
+  "icons": [
+    {
+      "src": "/brand/compact-icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/brand/symbol.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/brand/favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

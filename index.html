@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en" class="dark" prefix="og: https://ogp.me/ns#">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    
+    <!-- Primary Page Title & Core Meta -->
+    <title>Zelvior DevKit – Privacy-First Browser Developer Utilities Platform</title>
+    <meta name="title" content="Zelvior DevKit – Privacy-First Browser Developer Utilities Platform" />
+    <meta name="description" content="41 fast, privacy-first developer utilities running 100% locally in your browser. Format JSON, decode JWTs, compare code diffs, generate hashes, and test regex with zero cloud telemetry." />
+    <meta name="keywords" content="developer tools, privacy developer utilities, json formatter, text diff, jwt debugger offline, base64 encoder decoder, uuid generator, sha256 hash generator, chmod calculator, regex tester, sql formatter, sitemap generator, cron parser, pwa developer kit, zelvior devkit, zelvior labs" />
+    <meta name="author" content="Zelvior Labs" />
+    <meta name="creator" content="Zelvior Labs" />
+    <meta name="publisher" content="Zelvior Labs" />
+    <meta name="application-name" content="Zelvior DevKit" />
+    
+    <!-- Canonical & Technical SEO -->
+    <link rel="canonical" href="https://devkit.zelvior.com/" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large" />
+    <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large" />
+    <meta name="revisit-after" content="7 days" />
+
+    <!-- LLM & AI Discovery (LLMO / AEO) -->
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Context Summary" />
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="LLM Full Context" />
+    <link rel="alternate" type="text/plain" href="/llm.txt" title="LLM Summary Pointer" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+
+    <!-- Internationalization & Geographic Reach -->
+    <meta name="language" content="English" />
+    <meta http-equiv="content-language" content="en-US" />
+    <meta name="coverage" content="Worldwide" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="General" />
+    <meta name="geo.region" content="US" />
+    <meta name="geo.placename" content="Global" />
+
+    <!-- PWA & Brand Meta -->
+    <link rel="icon" type="image/svg+xml" href="/brand/favicon.svg" />
+    <link rel="apple-touch-icon" href="/brand/compact-icon.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Zelvior DevKit" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    
+    <!-- Open Graph / Facebook (SXO / Social SEO) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://devkit.zelvior.com/" />
+    <meta property="og:title" content="Zelvior DevKit – Privacy-First Browser Developer Utilities" />
+    <meta property="og:description" content="41 fast, privacy-first developer utilities running 100% locally in your browser. Format JSON, decode JWTs, test regex, and inspect data with zero server transmission." />
+    <meta property="og:site_name" content="Zelvior DevKit" />
+    <meta property="og:image" content="/brand/primary-logo.svg" />
+    <meta property="og:image:alt" content="Zelvior DevKit – Privacy-First Developer Utilities by Zelvior Labs" />
+    <meta property="og:image:type" content="image/svg+xml" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@zelviorlabs" />
+    <meta name="twitter:creator" content="@zelviorlabs" />
+    <meta name="twitter:title" content="Zelvior DevKit – Privacy-First Browser Developer Utilities" />
+    <meta name="twitter:description" content="41 fast, privacy-first developer utilities. Format JSON, inspect JWTs, diff code, and compute hashes with zero server transmission." />
+    <meta name="twitter:image" content="/brand/primary-logo.svg" />
+    <meta name="twitter:image:alt" content="Zelvior DevKit Logo" />
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Fast zero-flicker theme hydration via IndexedDB (Version-less adaptive open) -->
+    <script>
+      (function() {
+        try {
+          var req = indexedDB.open('zelvior_devkit_db');
+          req.onsuccess = function(e) {
+            var db = e.target.result;
+            if (db.objectStoreNames.contains('settings')) {
+              var tx = db.transaction('settings', 'readonly');
+              var getReq = tx.objectStore('settings').get('themeMode');
+              getReq.onsuccess = function() {
+                var mode = getReq.result;
+                if (mode === 'light') {
+                  document.documentElement.classList.remove('dark');
+                } else if (mode === 'dark') {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  if (window.matchMedia && !window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.classList.remove('dark');
+                  } else {
+                    document.documentElement.classList.add('dark');
+                  }
+                }
+              };
+            }
+          };
+          req.onerror = function() {
+            if (window.matchMedia && !window.matchMedia('(prefers-color-scheme: dark)').matches) {
+              document.documentElement.classList.remove('dark');
+            }
+          };
+        } catch (err) {
+          // Fallback to dark
+        }
+      })();
+    </script>
+
+    <!-- Comprehensive Schema.org Semantic Entity Graph (SEO / AEO / GEO) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://devkit.zelvior.com/#organization",
+          "name": "Zelvior Labs",
+          "url": "https://devkit.zelvior.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://devkit.zelvior.com/brand/primary-logo.svg"
+          },
+          "sameAs": [
+            "https://github.com/zelvior/devkit",
+            "https://twitter.com/zelviorlabs"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://devkit.zelvior.com/#website",
+          "url": "https://devkit.zelvior.com/",
+          "name": "Zelvior DevKit",
+          "publisher": {
+            "@id": "https://devkit.zelvior.com/#organization"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://devkit.zelvior.com/#/all-tools?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "WebApplication",
+          "@id": "https://devkit.zelvior.com/#application",
+          "name": "Zelvior DevKit",
+          "url": "https://devkit.zelvior.com/",
+          "applicationCategory": "DeveloperApplication",
+          "applicationSubCategory": "Utilities",
+          "operatingSystem": "All (Web Browser, Windows, macOS, Linux, iOS, Android)",
+          "browserRequirements": "Requires JavaScript. Supports Chrome, Firefox, Safari, Edge.",
+          "softwareVersion": "3.0.0",
+          "license": "https://opensource.org/licenses/MIT",
+          "isAccessibleForFree": true,
+          "description": "A privacy-first developer utilities platform executing 41 utilities 100% locally in browser memory with zero cloud telemetry.",
+          "creator": {
+            "@id": "https://devkit.zelvior.com/#organization"
+          },
+          "featureList": [
+            "JSON Formatter, Validator & Minifier",
+            "Side-by-Side & Unified Text Diff",
+            "JWT Token Debugger with Zero Remote Upload",
+            "Cryptographic Hash Generator (SHA-256, SHA-512, MD5)",
+            "HMAC Signature Generator",
+            "UUID v4 Bulk Generator",
+            "Sitemap.xml Builder",
+            "Regex Tester with Capture Groups",
+            "SQL Query Formatter",
+            "Chmod UNIX Permissions Calculator",
+            "Cron Schedule Expression Parser",
+            "Base64, URL & Hex Encoders",
+            "Client-Side IndexedDB Data Sovereignty"
+          ],
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://devkit.zelvior.com/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Does Zelvior DevKit send my code, JSON, or tokens to a server?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Zelvior DevKit is engineered with a strict 100% client-side execution guarantee. Every transformation, formatting pass, diff check, and cryptographic calculation runs entirely within your local browser runtime. No code, tokens, or private keys are ever transmitted over the network."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I use Zelvior DevKit offline as a PWA?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Zelvior DevKit is a fully compliant Progressive Web App (PWA). Once installed or cached in your browser, all 41 developer utilities function without an active internet connection."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What browser storage does Zelvior DevKit use?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Zelvior DevKit uses an origin-isolated IndexedDB database (zelvior_devkit_db) exclusively for user bookmarks, recent tool navigation, custom code snippets, and UI theme preferences. It sets zero HTTP cookies and does not use localStorage or sessionStorage."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is Zelvior DevKit open source and free for commercial use?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Zelvior DevKit is released under the permissive MIT License by Zelvior Labs. It is 100% free for personal, educational, and commercial development."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+  </head>
+  <body class="bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 antialiased min-h-screen selection:bg-neutral-800 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

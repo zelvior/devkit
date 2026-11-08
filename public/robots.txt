@@ -1,0 +1,53 @@
+# robots.txt for Zelvior DevKit (https://zelvior.com)
+# Privacy-First Developer Utilities Platform by Zelvior Labs
+
+User-agent: *
+Allow: /
+Allow: /manifest.json
+Allow: /brand/
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /llm.txt
+Allow: /sitemap.xml
+
+# Allow AI Search & Answer Engine Crawlers for GEO / AEO / LLMO
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: CCBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+# Canonical Sitemaps & LLM Indices
+Sitemap: /sitemap.xml

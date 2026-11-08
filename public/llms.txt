@@ -1,0 +1,77 @@
+# Zelvior DevKit
+
+> Everything developers need. Nothing they don't.
+> 41 fast, privacy-first developer utilities running 100% locally in the browser with zero cloud telemetry.
+
+## System Overview
+- **Name**: Zelvior DevKit
+- **Developer**: Zelvior Labs
+- **License**: MIT
+- **Architecture**: 100% Client-Side Single Page Application & Progressive Web App (PWA)
+- **Persistence**: Browser-isolated IndexedDB only (`zelvior_devkit_db`). Zero `localStorage`, zero `sessionStorage`, zero cookies.
+- **Security Policy**: Zero server network transmission. Sensitive secrets (JWTs, private keys, HMAC secrets, passwords) are held strictly in transient component memory and never persisted.
+- **Repository**: https://github.com/zelvior/devkit
+
+## Utility Categories & Tools (41 Total)
+
+### 1. JSON & Data Tools
+- **JSON Formatter & Validator**: Beautify, validate, format, and parse JSON with customizable 2-space, 4-space, or tab indentation.
+- **JSON Minifier**: Compress JSON payloads into single-line minified strings removing whitespace.
+- **CSV to JSON Converter**: Convert tabular comma/semicolon/tab delimited data into valid JSON objects or arrays.
+- **JSON to CSV Converter**: Flatten and export nested or flat JSON arrays into CSV format.
+- **XML to JSON Converter**: Parse XML structures into normalized JSON trees.
+- **JSON to XML Converter**: Convert JSON objects into compliant XML markup.
+- **YAML to JSON Converter**: Translate YAML configuration blocks into JSON.
+- **JSON to YAML Converter**: Translate JSON structures into clean YAML documents.
+
+### 2. Text & Code Diffing Tools
+- **Text & Code Diff**: Side-by-side and unified diff viewer highlighting additions, deletions, and line-by-line differences.
+- **String Case Converter**: Convert text between camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, and Title Case.
+- **String Inspector & Counter**: Count characters, words, sentences, lines, bytes, and estimate reading time.
+- **URL Slug Generator**: Transform strings into clean, SEO-friendly, URL-safe slug strings with custom delimiters.
+
+### 3. Encoding & Decoding Tools
+- **Base64 Encoder & Decoder**: Encode and decode standard and URL-safe Base64 strings.
+- **URL Encoder & Decoder**: Encode URI components and decode percent-encoded query parameters.
+- **HTML Entity Encoder & Decoder**: Escape and unescape HTML special characters (`&`, `<`, `>`, `"`, `'`).
+- **Hex to Text & Text to Hex**: Bidirectional hexadecimal encoding and decoding.
+- **Unicode & ASCII Inspector**: Inspect Unicode code points, hex values, UTF-8 byte representations, and glyph details.
+- **JWT Token Debugger**: Decode and inspect JSON Web Token headers, payloads, expirations, and claims 100% offline without sending tokens to any server.
+
+### 4. Security & Cryptography Tools
+- **Cryptographic Hash Generator**: Compute SHA-1, SHA-256, SHA-384, SHA-512, and MD5 hashes using the W3C Web Cryptography API.
+- **HMAC Generator**: Generate keyed-hash message authentication codes (HMAC-SHA256, HMAC-SHA512) locally.
+- **Password Generator**: Generate high-entropy, cryptographically strong random passwords using `crypto.getRandomValues()`.
+- **UUID v4 Generator**: Generate RFC 4122 compliant version 4 UUIDs in bulk.
+- **RSA Keypair Generator**: Generate RSA public/private keypairs (2048-bit and 4096-bit) directly in-browser.
+
+### 5. Web Development Tools
+- **Sitemap.xml Generator**: Visual builder to construct compliant XML sitemaps with priority, changefreq, and lastmod fields.
+- **URL Parser & Query Inspector**: Parse URLs into protocol, hostname, port, pathname, hash, and interactive query parameter tables.
+- **Meta Tag & OpenGraph Generator**: Generate Google SEO, OpenGraph (Facebook/LinkedIn), and Twitter card meta tags with live previews.
+- **HTTP Status Code Directory**: Searchable reference of all RFC HTTP status codes (1xx, 2xx, 3xx, 4xx, 5xx) with descriptions.
+- **User-Agent Inspector**: Parse and analyze browser User-Agent strings locally.
+
+### 6. CSS & Visual Design Tools
+- **CSS Minifier & Formatter**: Clean, optimize, format, or compress CSS stylesheets.
+- **CSS Box Shadow Generator**: Visually craft layered CSS box shadows with interactive sliders and instant CSS copy.
+- **Color Converter & Palette**: Convert colors between HEX, RGB, HSL, and HSV with luminosity indicators.
+- **Flexbox Playground**: Interactive visual flexbox container and item layout simulator.
+
+### 7. Time & Scheduling Tools
+- **Unix Epoch Timestamp Converter**: Convert Unix seconds/milliseconds to human-readable ISO/UTC dates and vice versa.
+- **Cron Schedule Parser**: Explain 5-part and 6-part cron expressions in plain English with future run date calculations.
+- **Timezone Calculator**: Compare and convert times across global timezones (UTC, EST, PST, GMT, CET, JST, etc.).
+
+### 8. Developer Utilities
+- **UNIX Chmod Calculator**: Interactive permissions grid calculating octal (e.g., 755, 644) and symbolic (rwxr-xr-x) permissions.
+- **Markdown Live Previewer**: Real-time GitHub-flavored Markdown editor with instant live rendered preview.
+- **Regex Tester**: Test regular expressions with instant flag matching (g, i, m, s, u) and capture group extraction.
+- **SQL Query Formatter**: Format and beautify complex SQL queries across standard dialects.
+
+## Optional Full Documentation
+For complete technical specifications, input/output schemas, and algorithmic implementations, see:
+- [llms-full.txt](/llms-full.txt)
+- [README.md](/README.md)
+- [SECURITY.md](/SECURITY.md)
+- [PRIVACY.md](/PRIVACY.md)

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <!-- Precision Hexagonal Shield Frame -->
+  <polygon points="64,6 118,34 118,94 64,122 10,94 10,34" stroke="currentColor" stroke-width="6" stroke-linejoin="round" fill="none" opacity="0.15" />
+  
+  <!-- Outer Angular Contour -->
+  <path d="M64 12 L112 37 V91 L64 116 L16 91 V37 Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round" fill="none" />
+  
+  <!-- Geometric Razor 'Z' Interlaced Core -->
+  <path d="M38 38 H90 L46 90 H90" stroke="currentColor" stroke-width="10" stroke-linecap="square" stroke-linejoin="miter" fill="none" />
+  
+  <!-- Developer Terminal / Brackets Accent Notch -->
+  <polygon points="46,38 34,44 46,50" fill="currentColor" />
+  <polygon points="82,78 94,84 82,90" fill="currentColor" />
+  
+  <!-- Central Energy Core Dot -->
+  <circle cx="68" cy="64" r="5" fill="currentColor" />
+</svg>

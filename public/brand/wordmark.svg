@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 40" fill="none">
+  <text x="0" y="24" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" letter-spacing="-0.5" fill="currentColor">
+    ZELVIOR
+  </text>
+  <text x="0" y="37" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="10" font-weight="600" letter-spacing="3.5" fill="currentColor" opacity="0.65">
+    DEVKIT
+  </text>
+</svg>

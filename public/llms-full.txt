@@ -1,0 +1,158 @@
+# Zelvior DevKit — Full LLM & Agent Specification (llms-full.txt)
+
+> Product: Zelvior DevKit
+> Publisher: Zelvior Labs
+> License: MIT
+> Specification Version: 3.0.0
+> Philosophy: Privacy-First, 100% Client-Side Browser Execution, Zero Cloud Telemetry
+
+---
+
+## 1. System Architecture & Privacy Verification
+
+Zelvior DevKit is an open-source web application engineered with zero reliance on backend computation servers.
+- **Client Execution**: All string formatting, cryptographic hashing, compression, token decoding, and diffing computations execute via JavaScript and WebAssembly within the user's browser runtime.
+- **Zero Network Transmission**: User input data never leaves the client device. No telemetry, analytics, session recordings, or error logs containing user payloads are transmitted.
+- **Persistence Layer**: Persistence is implemented strictly using the W3C IndexedDB standard (`zelvior_devkit_db`). `localStorage`, `sessionStorage`, and HTTP tracking cookies are prohibited.
+- **Memory-Only Policy for Secrets**: Passwords, HMAC private keys, RSA private keys, and decoded JWT signatures are processed strictly in volatile component state and are never written to disk or included in backup exports.
+
+---
+
+## 2. Exhaustive Utility Catalog (41 Tools)
+
+### Category: JSON & Data (`json-data`)
+1. **JSON Formatter & Validator** (`json-formatter`):
+   - Input: Raw JSON string.
+   - Operations: Parse, syntax validation, indentation formatting (2 spaces, 4 spaces, tabs).
+   - Output: Formatted JSON with syntax highlighting, byte size, and line count.
+2. **JSON Minifier** (`json-minifier`):
+   - Input: Valid JSON string.
+   - Output: Single-line condensed JSON with whitespace and newlines stripped.
+3. **CSV to JSON** (`csv-to-json`):
+   - Input: Comma-separated, tab-separated, or semicolon-separated values.
+   - Features: Header row detection, type inference (numeric, boolean, string), array or keyed object output.
+4. **JSON to CSV** (`json-to-csv`):
+   - Input: JSON array of objects.
+   - Output: Formatted CSV with proper quotation and escaping.
+5. **XML to JSON** (`xml-to-json`):
+   - Input: Well-formed XML document.
+   - Output: Normalized JSON representation preserving attributes and nested nodes.
+6. **JSON to XML** (`json-to-xml`):
+   - Input: JSON object.
+   - Output: Formatted XML document with optional root tag naming.
+7. **YAML to JSON** (`yaml-to-json`):
+   - Input: YAML text with key-value pairs and arrays.
+   - Output: Standard JSON document.
+8. **JSON to YAML** (`json-to-yaml`):
+   - Input: JSON object or array.
+   - Output: Clean YAML specification with nested indentation.
+
+### Category: Text & Code Diff (`text-diff`)
+9. **Text Diff Viewer** (`text-diff`):
+   - Algorithm: Myers diff algorithm.
+   - Views: Unified view and Side-by-Side split view.
+   - Features: Character-level and line-level difference calculation, addition/deletion metrics.
+10. **String Case Converter** (`case-converter`):
+    - Transforms: camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, dot.case, Title Case, lowercase, UPPERCASE.
+11. **Word & Character Counter** (`word-counter`):
+    - Metrics: Total characters, characters excluding whitespace, words, sentences, paragraphs, bytes, and estimated reading time (200 wpm).
+12. **URL Slug Generator** (`slug-generator`):
+    - Features: Diacritics removal, accent transliteration, custom separator (hyphen, underscore), lowercase normalization.
+
+### Category: Encoding & Decoding (`encoding`)
+13. **Base64 Encoder / Decoder** (`base64-converter`):
+    - Standard: RFC 4648.
+    - Modes: Standard Base64 (`+`, `/`, `=`) and URL-Safe Base64 (`-`, `_`).
+14. **URL Encoder / Decoder** (`url-encoder`):
+    - Functions: `encodeURIComponent`, `encodeURI`, `decodeURIComponent`.
+15. **HTML Entities** (`html-entities`):
+    - Encodes and decodes named entities (`&amp;`, `&lt;`, `&gt;`, `&quot;`, `&#39;`).
+16. **Hex Converter** (`hex-converter`):
+    - Converts raw UTF-8 strings to hex pairs (e.g. `48 65 6c 6c 6f`) and vice versa.
+17. **Unicode Inspector** (`unicode-inspector`):
+    - Decodes code points (U+XXXX), UTF-8 bytes, UTF-16 surrogate pairs, and character categories.
+18. **JWT Debugger** (`jwt-decoder`):
+    - Standard: RFC 7519.
+    - Execution: 100% offline client-side parsing of Base64URL Header and Payload.
+    - Security Guarantee: Token is never sent to any external validation API. Displays decoded expiration dates and signature algorithm.
+
+### Category: Security & Cryptography (`security`)
+19. **Hash Generator** (`hash-generator`):
+    - Engine: W3C Web Cryptography API (`crypto.subtle.digest`).
+    - Algorithms: SHA-1, SHA-256, SHA-384, SHA-512, MD5.
+20. **HMAC Generator** (`hmac-generator`):
+    - Engine: `crypto.subtle.importKey` and `crypto.subtle.sign`.
+    - Hashes: HMAC-SHA256, HMAC-SHA384, HMAC-SHA512.
+21. **Password Generator** (`password-generator`):
+    - Engine: `window.crypto.getRandomValues()`.
+    - Controls: Uppercase, lowercase, numbers, symbols, length (4–128), entropy calculation in bits.
+22. **UUID Generator** (`uuid-generator`):
+    - Standard: RFC 4122 Version 4.
+    - Bulk generation: 1 to 100 unique UUIDs with or without hyphens and uppercase options.
+23. **RSA Keypair Generator** (`rsa-key-generator`):
+    - Engine: `crypto.subtle.generateKey` (RSASSA-PKCS1-v1_5).
+    - Keys: 2048-bit and 4096-bit public and private keys in PEM format.
+
+### Category: Web Development (`web-dev`)
+24. **Sitemap.xml Generator** (`sitemap-generator`):
+    - Visual builder supporting URLs, lastmod timestamps, changefreq (`always`, `hourly`, `daily`, `weekly`, `monthly`, `yearly`, `never`), and priority (0.0 to 1.0).
+    - Output: Fully compliant XML sitemap.
+25. **URL Parser** (`url-parser`):
+    - Breaks down protocol, hostname, port, pathname, search params, and hash with an editable query param table.
+26. **Meta Tag Generator** (`meta-tag-generator`):
+    - Generates HTML `<meta>`, OpenGraph (`og:*`), and Twitter Card (`twitter:*`) markup with real-time card previews.
+27. **HTTP Status Directory** (`http-status-codes`):
+    - Searchable directory of RFC HTTP response status codes with definitions and caching advice.
+28. **User-Agent Parser** (`user-agent-parser`):
+    - Extracts browser engine, version, operating system, and architecture locally without external services.
+
+### Category: CSS & Visual Design (`css-design`)
+29. **CSS Minifier & Formatter** (`css-minifier`):
+    - Strips comments, removes unnecessary whitespace, and optimizes selector blocks.
+30. **Box Shadow Generator** (`box-shadow-generator`):
+    - Visual interactive sliders for horizontal/vertical offsets, blur, spread, shadow color, opacity, and inset toggle.
+31. **Color Converter** (`color-converter`):
+    - Converts between HEX, RGB, RGBA, HSL, HSLA, and HSV with WCAG contrast ratio calculations.
+32. **Flexbox Visualizer** (`flexbox-generator`):
+    - Visual playground testing `flex-direction`, `justify-content`, `align-items`, `flex-wrap`, and `gap`.
+
+### Category: Time & Scheduling (`time-date`)
+33. **Timestamp Converter** (`timestamp-converter`):
+    - Bidirectional conversion between Unix epoch timestamps (seconds and milliseconds) and ISO 8601 UTC / Local time.
+34. **Cron Expression Parser** (`cron-parser`):
+    - Evaluates standard 5-field and 6-field cron expressions into plain English explanations and computes the next 5 execution times.
+35. **Timezone Calculator** (`timezone-converter`):
+    - Interactive time comparison across major international timezones (UTC, America/New_York, Europe/London, Asia/Tokyo, etc.).
+
+### Category: Developer Utilities (`dev-utilities`)
+36. **Chmod Permissions Calculator** (`chmod-calculator`):
+    - Interactive 3x3 matrix (Owner, Group, Public / Read, Write, Execute). Computes octal representation (e.g. 755) and symbolic string (e.g. `-rwxr-xr-x`).
+37. **Markdown Live Previewer** (`markdown-preview`):
+    - Instant live preview supporting headings, tables, blockquotes, code fences, and checklists.
+38. **Regular Expression Tester** (`regex-tester`):
+    - Pattern matching against sample strings with flag toggles (`g`, `i`, `m`, `s`, `u`) and detailed capture group breakdown.
+39. **SQL Formatter** (`sql-formatter`):
+    - Indents keywords, formats clauses, and beautifies standard SQL statements.
+40. **Color Palette Generator** (`color-palette`):
+    - Generates complementary, analogous, triadic, and monochromatic harmonic palettes.
+41. **JWT Signature Validator / Inspector** (`jwt-validator`):
+    - Validates signature structure and token format with zero network verification requests.
+
+---
+
+## 3. Machine-Readable Integration & Deep Linking
+
+Zelvior DevKit supports client-side URL hash navigation:
+- Home: `#/`
+- All Utilities: `#/all-tools`
+- Categories: `#/category/{category-id}`
+- Specific Tool: `#/tools/{tool-id}`
+- Legal Center: `#/legal/{privacy|terms|security|storage|license|shortcuts}`
+
+---
+
+## 4. Open Source Standards & License
+- License: MIT License
+- Copyright: (c) 2026 Zelvior Labs
+- Maintainers: Zelvior Labs Core Engineering
+- Contact: team@zelvior.com | security@zelvior.com
