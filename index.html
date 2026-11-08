@@ -73,60 +73,57 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-    <!-- Fast zero-flicker theme hydration via IndexedDB (Version-less adaptive open) -->
+    <!-- Fast zero-flicker theme hydration via IndexedDB (version-less adaptive open) -->
     <script>
-      (function() {
-        try {
-          var req = indexedDB.open('zelvior_devkit_db');
-          req.onsuccess = function(e) {
-            var db = e.target.result;
-            if (db.objectStoreNames.contains('settings')) {
-            var tx = db.transaction('settings', 'readonly');
-            var getReq = tx.objectStore('settings').get('themeMode');
-            getReq.onsuccess = function() {
-              var mode = getReq.result;
-              if (mode === 'light') {
-                document.documentElement.classList.remove('dark');
-              } else if (mode === 'dark') {
-                document.documentElement.classList.add('dark');
-              } else {
-                if (window.matchMedia && !window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                  document.documentElement.classList.remove('dark');
-                } else {
-                  document.documentElement.classList.add('dark');
-                }
-              }
-              // Release this short-lived connection so the app's schema
-              // upgrade (if any) is not blocked by it.
-              db.close();
-            };
-                if (mode === 'light') {
-                  document.documentElement.classList.remove('dark');
-                } else if (mode === 'dark') {
-                  document.documentElement.classList.add('dark');
-                } else {
-                  if (window.matchMedia && !window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    document.documentElement.classList.remove('dark');
-                  } else {
-                    document.documentElement.classList.add('dark');
-                  }
+      (function () {
+        // Applies the resolved color scheme to <html>.
+        function applyMode(mode) {
+          var prefersLight =
+            window.matchMedia && !window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (mode === 'light' || (mode !== 'dark' && prefersLight)) {
+            document.documentElement.classList.remove('dark');
+          } else {
+            document.documentElement.classList.add('dark');
+          }
+        }
+        // Reads the persisted themeMode setting (if any) and applies it.
+        function hydrateTheme() {
+          try {
+            var req = indexedDB.open('zelvior_devkit_db');
+            req.onsuccess = function (e) {
+              var db = e.target.result;
+              var done = function () {
+                try {
+                  db.close();
+                } catch (closeErr) {
+                  // already closed; ignore
                 }
               };
-            }
-          };
-          req.onerror = function() {
-            try {
-              db.close();
-            } catch (e) {
-              // connection never opened; nothing to close
-            }
-            if (window.matchMedia && !window.matchMedia('(prefers-color-scheme: dark)').matches) {
-              document.documentElement.classList.remove('dark');
-            }
-          };
-        } catch (err) {
-          // Fallback to dark
+              if (!db.objectStoreNames.contains('settings')) {
+                applyMode(null);
+                done();
+                return;
+              }
+              var tx = db.transaction('settings', 'readonly');
+              var getReq = tx.objectStore('settings').get('themeMode');
+              getReq.onsuccess = function () {
+                applyMode(getReq.result);
+                done();
+              };
+              getReq.onerror = function () {
+                applyMode(null);
+                done();
+              };
+            };
+            req.onerror = function () {
+              // IndexedDB unavailable (private mode, quota, etc.) — fall back to media query.
+              applyMode(null);
+            };
+          } catch (err) {
+            applyMode(null);
+          }
         }
+        hydrateTheme();
       })();
     </script>
 

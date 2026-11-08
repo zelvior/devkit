@@ -22,6 +22,13 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ recentToolIds, onSelectToo
     .map((id) => TOOLS.find((t) => t.id === id))
     .filter(Boolean) as typeof TOOLS;
 
+  const cardKeyHandler = (toolId: string) => (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onSelectTool(toolId);
+    }
+  };
+
   return (
     <section className="py-12">
       <div className="flex items-center justify-between mb-6">
@@ -40,6 +47,9 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ recentToolIds, onSelectToo
         {/* Large Bento Card: JSON Formatter */}
         <div
           onClick={() => onSelectTool('json-formatter')}
+          role="button"
+          tabIndex={0}
+          onKeyDown={cardKeyHandler('json-formatter')}
           className="md:col-span-2 p-6 rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 hover:border-neutral-400 dark:hover:border-neutral-700 transition-all cursor-pointer group flex flex-col justify-between"
         >
           <div>
@@ -70,6 +80,9 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ recentToolIds, onSelectToo
         {/* Bento Card: JWT Decoder */}
         <div
           onClick={() => onSelectTool('jwt-decoder')}
+          role="button"
+          tabIndex={0}
+          onKeyDown={cardKeyHandler('jwt-decoder')}
           className="p-6 rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 hover:border-neutral-400 dark:hover:border-neutral-700 transition-all cursor-pointer group flex flex-col justify-between"
         >
           <div>
@@ -95,6 +108,9 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ recentToolIds, onSelectToo
         {/* Bento Card: UUID Generator */}
         <div
           onClick={() => onSelectTool('uuid-generator')}
+          role="button"
+          tabIndex={0}
+          onKeyDown={cardKeyHandler('uuid-generator')}
           className="p-6 rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 hover:border-neutral-400 dark:hover:border-neutral-700 transition-all cursor-pointer group flex flex-col justify-between"
         >
           <div>
@@ -119,6 +135,9 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ recentToolIds, onSelectToo
         {/* Bento Card: Base64 Encoder/Decoder */}
         <div
           onClick={() => onSelectTool('base64')}
+          role="button"
+          tabIndex={0}
+          onKeyDown={cardKeyHandler('base64')}
           className="p-6 rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 hover:border-neutral-400 dark:hover:border-neutral-700 transition-all cursor-pointer group flex flex-col justify-between"
         >
           <div>
@@ -143,6 +162,9 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ recentToolIds, onSelectToo
         {/* Large Bento Card: Regex Tester */}
         <div
           onClick={() => onSelectTool('regex-tester')}
+          role="button"
+          tabIndex={0}
+          onKeyDown={cardKeyHandler('regex-tester')}
           className="md:col-span-2 p-6 rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 hover:border-neutral-400 dark:hover:border-neutral-700 transition-all cursor-pointer group flex flex-col justify-between"
         >
           <div>
@@ -168,6 +190,9 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ recentToolIds, onSelectToo
         {/* Bento Card: Hash Generator */}
         <div
           onClick={() => onSelectTool('hash-generator')}
+          role="button"
+          tabIndex={0}
+          onKeyDown={cardKeyHandler('hash-generator')}
           className="p-6 rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 hover:border-neutral-400 dark:hover:border-neutral-700 transition-all cursor-pointer group flex flex-col justify-between"
         >
           <div>

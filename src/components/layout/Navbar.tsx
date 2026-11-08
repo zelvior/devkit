@@ -63,10 +63,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={onNavigateHome}
-            className="flex items-center gap-2.5 text-left group transition-transform focus-visible:outline-none"
+            className="flex items-center gap-2.5 text-left group transition-transform rounded-md"
           >
             <BrandLogo variant="symbol" size="sm" />
-            <div className="flex flex-col leading-none">
+            <div className="hidden min-[400px]:flex flex-col leading-none">
               <span className="text-sm sm:text-base font-bold tracking-tight text-neutral-900 dark:text-neutral-100 whitespace-nowrap">
                 Zelvior DevKit
               </span>
@@ -164,7 +164,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             href="https://github.com/zelvior/devkit"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-1.5 text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white rounded-md border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 transition-colors"
+            className="hidden sm:inline-flex p-1.5 text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white rounded-md border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 transition-colors"
             aria-label="GitHub Repository"
             title="Zelvior DevKit GitHub repository"
           >

@@ -147,7 +147,7 @@ export const SnippetsModal: React.FC<SnippetsModalProps> = ({
         {/* Content Layout */}
         <div className="flex-1 flex flex-col md:flex-row min-h-0 overflow-hidden">
           {/* Left Sidebar: Snippet List */}
-          <div className="w-full md:w-80 border-r border-neutral-200 dark:border-neutral-800 flex flex-col bg-neutral-50/60 dark:bg-neutral-950/60">
+          <div className="w-full h-56 sm:h-64 md:h-auto md:w-80 md:min-h-0 shrink-0 border-b md:border-b-0 md:border-r border-neutral-200 dark:border-neutral-800 flex flex-col bg-neutral-50/60 dark:bg-neutral-950/60">
             {/* Search filter */}
             <div className="p-3 border-b border-neutral-200 dark:border-neutral-800">
               <div className="relative">
