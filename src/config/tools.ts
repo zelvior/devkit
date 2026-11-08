@@ -163,7 +163,7 @@ export const TOOLS: ToolDefinition[] = [
     category: 'encoding',
     description: 'Safely encode URI components or full URLs and decode percent-encoded query parameters.',
     keywords: ['url', 'uri', 'encode', 'decode', 'percent', 'query'],
-    sampleInput: 'https://devkit.zelvior.com/search?query=web crypto & tags=hash,uuid,jwt#overview',
+    sampleInput: 'https://zdevkit.vercel.app/search?query=web crypto & tags=hash,uuid,jwt#overview',
   },
   {
     id: 'html-entity',

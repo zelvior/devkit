@@ -1,5 +1,6 @@
 <div align="center">
   <img src="./public/brand/primary-logo.svg" alt="Zelvior DevKit Logo" width="320" />
+  <p><a href="https://zdevkit.vercel.app"><strong>Visit Zelvior DevKit →</strong></a></p>
   <p><strong>Everything developers need. Nothing they don't.</strong></p>
   <p>41 fast, privacy-first developer utilities running 100% locally in your browser.</p>
 
@@ -125,5 +126,6 @@ npx vercel
 ## Community & Support
 
 - **Author**: Zelvior Labs
+- **Website**: [https://zdevkit.vercel.app](https://zdevkit.vercel.app)
 - **Repository**: [https://github.com/zelvior/devkit](https://github.com/zelvior/devkit)
 - **License**: MIT

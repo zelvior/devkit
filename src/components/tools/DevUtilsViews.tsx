@@ -41,8 +41,8 @@ export const DevUtilsViews: React.FC<DevUtilsProps> = ({ tool, onNavigateTool })
   const [metaOptions, setMetaOptions] = useState<MetaTagOptions>({
     title: 'Zelvior DevKit – Privacy-First Developer Utilities Platform',
     description: 'Fast, privacy-first developer utilities that run 100% locally in your browser with zero telemetry.',
-    canonicalUrl: 'https://devkit.zelvior.com',
-    ogImage: 'https://devkit.zelvior.com/og-banner.png',
+    canonicalUrl: 'https://zdevkit.vercel.app',
+    ogImage: 'https://zdevkit.vercel.app/og-banner.png',
     twitterHandle: '@zelviorlabs',
     siteName: 'Zelvior DevKit',
   });

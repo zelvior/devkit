@@ -1,3 +1,5 @@
 # Zelvior DevKit LLM Index
+Website: https://zdevkit.vercel.app
+Repository: https://github.com/zelvior/devkit
 See: /llms.txt
 For complete specifications: /llms-full.txt

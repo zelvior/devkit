@@ -2,6 +2,8 @@
 
 > Product: Zelvior DevKit
 > Publisher: Zelvior Labs
+> Website: https://zdevkit.vercel.app
+> Repository: https://github.com/zelvior/devkit
 > License: MIT
 > Specification Version: 3.0.0
 > Philosophy: Privacy-First, 100% Client-Side Browser Execution, Zero Cloud Telemetry

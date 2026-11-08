@@ -1,4 +1,4 @@
-# robots.txt for Zelvior DevKit (https://zelvior.com)
+# robots.txt for Zelvior DevKit (https://zdevkit.vercel.app)
 # Privacy-First Developer Utilities Platform by Zelvior Labs
 
 User-agent: *
@@ -50,4 +50,4 @@ User-agent: meta-externalagent
 Allow: /
 
 # Canonical Sitemaps & LLM Indices
-Sitemap: /sitemap.xml
+Sitemap: https://zdevkit.vercel.app/sitemap.xml
