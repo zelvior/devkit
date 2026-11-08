@@ -10,6 +10,7 @@
 - **Architecture**: 100% Client-Side Single Page Application & Progressive Web App (PWA)
 - **Persistence**: Browser-isolated IndexedDB only (`zelvior_devkit_db`). Zero `localStorage`, zero `sessionStorage`, zero cookies.
 - **Security Policy**: Zero server network transmission. Sensitive secrets (JWTs, private keys, HMAC secrets, passwords) are held strictly in transient component memory and never persisted.
+- **Website**: https://zdevkit.vercel.app
 - **Repository**: https://github.com/zelvior/devkit
 
 ## Utility Categories & Tools (41 Total)
