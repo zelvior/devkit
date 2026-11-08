@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { CATEGORIES, TOOLS } from '../../config/tools';
 import {
   Braces,
@@ -63,11 +63,29 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const { showToast } = useToast();
   const isCollapsed = !isOpen;
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  // Keep the latest close handler in a ref so the drawer effect below only
+  // depends on `isOpen` (App re-creates onCloseMobile every render).
+  const onCloseMobileRef = useRef(onCloseMobile);
+  useEffect(() => {
+    onCloseMobileRef.current = onCloseMobile;
+  });
   const [expandedCategories, setExpandedCategories] = React.useState<Record<string, boolean>>({
     'json-data': true,
     'text-diff': true,
     'web-dev': true,
   });
+
+  // Mobile drawer: close on Escape and move focus to the close button on open.
+  useEffect(() => {
+    if (!isOpen) return;
+    closeButtonRef.current?.focus();
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onCloseMobileRef.current();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isOpen]);
 
   const toggleCategoryExpand = (catId: string) => {
     setExpandedCategories((prev) => ({ ...prev, [catId]: !prev[catId] }));
@@ -122,8 +140,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
             All Utilities (41)
           </span>
           <button
+            ref={closeButtonRef}
             onClick={onCloseMobile}
-            className="p-1.5 text-neutral-500 hover:text-neutral-950 dark:hover:text-white rounded-md"
+            className="p-1.5 text-neutral-500 hover:text-neutral-950 dark:hover:text-white rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500"
             aria-label="Close navigation"
           >
             <X className="w-4 h-4" />
@@ -178,6 +197,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     onSelectTool(t.id);
                     onCloseMobile();
                   }}
+                  aria-current={activeToolId === t.id ? 'page' : undefined}
                   className={`flex items-center justify-between px-2.5 py-1.5 rounded-md text-left transition-colors truncate ${
                     activeToolId === t.id
                       ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 font-semibold'
@@ -204,6 +224,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     onSelectTool(t.id);
                     onCloseMobile();
                   }}
+                  aria-current={activeToolId === t.id ? 'page' : undefined}
                   className={`flex items-center justify-between px-2.5 py-1.5 rounded-md text-left transition-colors truncate ${
                     activeToolId === t.id
                       ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 font-semibold'
@@ -230,6 +251,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     onSelectTool(t.id);
                     onCloseMobile();
                   }}
+                  aria-current={activeToolId === t.id ? 'page' : undefined}
                   className={`flex items-center justify-between px-2.5 py-1.5 rounded-md text-left transition-colors truncate ${
                     activeToolId === t.id
                       ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 font-semibold'
@@ -257,7 +279,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 return (
                   <div key={cat.id} className="flex flex-col">
                     <div
-                      className={`flex items-center justify-between px-2.5 py-1.5 rounded-md text-left transition-colors cursor-pointer ${centerWhenCollapsed} ${
+                      className={`flex items-center justify-between px-2.5 py-1.5 rounded-md text-left transition-colors ${centerWhenCollapsed} ${
                         isCurrentCategory
                           ? 'bg-neutral-200 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 font-medium'
                           : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200/60 dark:hover:bg-neutral-900'
@@ -268,11 +290,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           onSelectCategory(cat.id);
                           onCloseMobile();
                         }}
-                        className="flex items-center gap-2 flex-1 text-left"
+                        className="flex items-center gap-2 flex-1 text-left rounded-md py-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500"
+                        aria-label={cat.name}
+                        title={cat.name}
+                        aria-current={isCurrentCategory ? 'page' : undefined}
                       >
                         <IconComponent className="w-3.5 h-3.5 text-neutral-500 shrink-0" />
                         <span className={`truncate ${hideWhenCollapsed}`}>{cat.name}</span>
-                        <span className={`text-[10px] text-neutral-400 dark:text-neutral-600 font-mono ${hideWhenCollapsed}`}>
+                        <span className={`ml-1 shrink-0 text-[10px] text-neutral-400 dark:text-neutral-600 font-mono ${hideWhenCollapsed}`}>
                           {catTools.length}
                         </span>
                       </button>
@@ -302,7 +327,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                               onSelectTool(t.id);
                               onCloseMobile();
                             }}
-                            className={`px-2 py-1 text-left rounded text-[11px] truncate transition-colors ${
+                            aria-current={activeToolId === t.id ? 'page' : undefined}
+                            className={`px-2 py-1 text-left rounded text-[11px] truncate transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500 ${
                               activeToolId === t.id
                                 ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 font-semibold'
                                 : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-neutral-200'
