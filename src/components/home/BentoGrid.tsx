@@ -36,7 +36,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ recentToolIds, onSelectToo
       </div>
 
       {/* Bento Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:grid-flow-row-dense gap-4">
         {/* Large Bento Card: JSON Formatter */}
         <div
           onClick={() => onSelectTool('json-formatter')}

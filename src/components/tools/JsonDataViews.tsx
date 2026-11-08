@@ -146,7 +146,7 @@ export const JsonDataViews: React.FC<ToolViewProps> = ({ tool }) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Input Panel */}
         <div className="flex flex-col rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden shadow-xs">
-          <div className="flex items-center justify-between px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-600 dark:text-neutral-400">
+          <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-600 dark:text-neutral-400">
             <span>Input {tool.id === 'csv-to-json' ? 'CSV' : 'JSON'}</span>
             <span className="font-mono text-[11px]">{input.length} chars</span>
           </div>
@@ -162,7 +162,7 @@ export const JsonDataViews: React.FC<ToolViewProps> = ({ tool }) => {
 
         {/* Output Panel */}
         <div className="flex flex-col rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden shadow-xs">
-          <div className="flex items-center justify-between px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-600 dark:text-neutral-400">
+          <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-600 dark:text-neutral-400">
             <span>Formatted Output {tool.id === 'json-to-csv' ? '(CSV)' : '(JSON)'}</span>
             <span className="font-mono text-[11px]">{output.length} chars</span>
           </div>

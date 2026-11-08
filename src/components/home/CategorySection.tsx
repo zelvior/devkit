@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CATEGORIES, TOOLS } from '../../config/tools';
 import { ToolCategory, ToolDefinition } from '../../types';
 import { Search, ArrowRight, Star } from 'lucide-react';
@@ -17,6 +17,12 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
   favoriteIds,
 }) => {
   const [activeCategory, setActiveCategory] = useState<string>(selectedCategoryFilter);
+
+  // Keep the tab strip in sync when the category is changed from outside this
+  // component (sidebar navigation or a #/category/<id> deep link).
+  useEffect(() => {
+    setActiveCategory(selectedCategoryFilter);
+  }, [selectedCategoryFilter]);
   const [searchFilter, setSearchFilter] = useState('');
 
   const handleCategoryChange = (catId: string) => {

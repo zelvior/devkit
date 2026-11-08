@@ -96,9 +96,12 @@ export const SnippetsModal: React.FC<SnippetsModalProps> = ({
   });
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/70 backdrop-blur-xs animate-in fade-in duration-150">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-3 sm:p-6 bg-black/70 backdrop-blur-xs animate-overlay-in"
+      onClick={onClose}
+    >
       <div
-        className="w-full max-w-4xl bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col h-[85vh] max-h-[750px]"
+        className="w-full max-w-4xl shrink-0 my-auto bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col h-[85vh] max-h-[750px] animate-dialog-in"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header */}

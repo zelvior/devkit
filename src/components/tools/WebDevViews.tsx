@@ -179,7 +179,7 @@ export const WebDevViews: React.FC<{ tool: ToolDefinition }> = ({ tool }) => {
 
         {/* Bulk Import Modal / Drawer */}
         {showBulkModal && (
-          <div className="p-4 rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 space-y-3 animate-in fade-in duration-150">
+          <div className="p-4 rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 space-y-3 animate-dialog-in">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-neutral-900 dark:text-neutral-100">
                 Bulk Paste URLs (One per line or comma-separated)
@@ -391,7 +391,7 @@ export const WebDevViews: React.FC<{ tool: ToolDefinition }> = ({ tool }) => {
 
         {/* Live XML Code Output Panel */}
         <div className="flex flex-col rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden shadow-xs">
-          <div className="flex items-center justify-between px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-500">
+          <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-500">
             <div className="flex items-center gap-2">
               <FileCode className="w-3.5 h-3.5 text-neutral-400" />
               <span>Generated sitemap.xml Preview</span>
@@ -547,7 +547,7 @@ export const WebDevViews: React.FC<{ tool: ToolDefinition }> = ({ tool }) => {
     return (
       <div className="space-y-6">
         <div className="flex flex-col rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-500">
+          <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-500">
             <span>User-Agent String</span>
             <button
               onClick={() => setInput(navigator?.userAgent || '')}

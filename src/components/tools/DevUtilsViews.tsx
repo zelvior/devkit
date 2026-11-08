@@ -155,7 +155,7 @@ export const DevUtilsViews: React.FC<DevUtilsProps> = ({ tool, onNavigateTool })
           </div>
 
           <div className="flex flex-col rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-2 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-500">
+            <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-500">
               <span>Interactive Match Highlighting</span>
               <span className="font-mono">{regexResult?.count || 0} matches</span>
             </div>
@@ -281,7 +281,7 @@ export const DevUtilsViews: React.FC<DevUtilsProps> = ({ tool, onNavigateTool })
 
     return (
       <div className="space-y-4">
-        <div className="flex items-center justify-between p-3 bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-lg text-xs">
+        <div className="flex flex-wrap items-center justify-between gap-2 p-3 bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-lg text-xs">
           <div className="flex items-center gap-2 text-neutral-500">
             <span>Markdown Live Editor with XSS Sanitization</span>
           </div>
@@ -319,7 +319,7 @@ export const DevUtilsViews: React.FC<DevUtilsProps> = ({ tool, onNavigateTool })
               Sanitized Live Preview
             </div>
             <div
-              className="p-6 prose dark:prose-invert max-w-none text-xs overflow-y-auto min-h-[300px]"
+              className="p-4 sm:p-6 max-w-none text-xs leading-relaxed overflow-y-auto min-h-[300px] [overflow-wrap:anywhere]"
               dangerouslySetInnerHTML={{ __html: markdownHtml }}
             />
           </div>
@@ -530,7 +530,7 @@ export const DevUtilsViews: React.FC<DevUtilsProps> = ({ tool, onNavigateTool })
 
         {/* Generated HTML Markup */}
         <div className="flex flex-col rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-500">
+          <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-500">
             <span>Generated HTML & OpenGraph Markup</span>
             <CopyButton textToCopy={output} label="Copy Markup" />
           </div>

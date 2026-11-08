@@ -306,9 +306,10 @@ export default function App() {
           onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
         />
 
-        {/* Mobile Header Sub-bar (back to directory when inside a tool) */}
+        {/* Mobile Header Sub-bar (back to directory when inside a tool).
+            Must switch at `lg`, matching the breakpoint where the sidebar rail becomes visible. */}
         {activeToolId && (
-          <div className="md:hidden flex items-center justify-between px-3 py-2 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-xs">
+          <div className="lg:hidden flex items-center justify-between px-3 py-2 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-xs">
             <button
               onClick={handleNavigateHome}
               className="flex items-center gap-1 text-neutral-500 hover:text-neutral-900 dark:hover:text-white py-1.5 px-2 font-medium"
@@ -319,7 +320,9 @@ export default function App() {
           </div>
         )}
 
-        {/* Main Workspace Layout */}
+        {/* Main Workspace Layout
+            The rail is an in-flow sticky sibling at `lg`+ (and an off-canvas
+            overlay below that), so the content column needs no padding offset. */}
         <div className="flex-1 flex w-full max-w-7xl mx-auto">
           {/* Collapsible Sidebar */}
           <Sidebar
@@ -337,7 +340,7 @@ export default function App() {
           />
 
           {/* Main Viewport Content */}
-          <main className={`flex-1 min-w-0 px-3 sm:pr-6 sm:pl-6 lg:pr-8 py-6 overflow-x-hidden ${sidebarOpen ? 'lg:pl-72' : 'lg:pl-16'}`}>
+          <main className="flex-1 min-w-0 px-3 sm:px-6 py-6">
             {currentView === 'not-found' ? (
               <div className="py-16 text-center max-w-md mx-auto space-y-4">
                 <div className="text-4xl font-extrabold font-mono text-neutral-400 dark:text-neutral-600">

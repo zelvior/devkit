@@ -175,14 +175,14 @@ export const DataManagerModal: React.FC<DataManagerModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-3 sm:p-4 bg-black/75 backdrop-blur-sm animate-overlay-in"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="data-manager-title"
     >
       <div
-        className="w-full max-w-2xl bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden"
+        className="w-full max-w-2xl shrink-0 my-auto bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden animate-dialog-in"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
