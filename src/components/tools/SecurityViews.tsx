@@ -140,7 +140,7 @@ export const SecurityViews: React.FC<{ tool: ToolDefinition }> = ({ tool }) => {
     return (
       <div className="space-y-6">
         <div className="flex flex-col rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-500">
+          <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-500">
             <span>Input Text String</span>
             <div className="flex items-center gap-3">
               <label className="flex items-center gap-1.5 cursor-pointer">
@@ -288,7 +288,7 @@ export const SecurityViews: React.FC<{ tool: ToolDefinition }> = ({ tool }) => {
       <div className="space-y-6">
         {/* Token input */}
         <div className="flex flex-col rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-500">
+          <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-500">
             <span>Encoded JWT Token</span>
             <button onClick={() => setInput('')} className="hover:text-red-500">
               Clear
@@ -340,7 +340,7 @@ export const SecurityViews: React.FC<{ tool: ToolDefinition }> = ({ tool }) => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* Header */}
               <div className="flex flex-col rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden">
-                <div className="flex items-center justify-between px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-500">
+                <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-500">
                   <span>Header</span>
                   <CopyButton textToCopy={JSON.stringify(jwtData.header, null, 2)} label="Copy" />
                 </div>
@@ -351,7 +351,7 @@ export const SecurityViews: React.FC<{ tool: ToolDefinition }> = ({ tool }) => {
 
               {/* Payload */}
               <div className="flex flex-col rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden">
-                <div className="flex items-center justify-between px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-500">
+                <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-500">
                   <span>Payload Claims</span>
                   <CopyButton textToCopy={JSON.stringify(jwtData.payload, null, 2)} label="Copy" />
                 </div>

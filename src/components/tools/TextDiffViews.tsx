@@ -15,6 +15,41 @@ import {
 import { CopyButton } from '../ui/CopyButton';
 import { Trash2, Columns, AlignJustify, ArrowUpDown } from 'lucide-react';
 
+type DiffRow = { left: DiffLine | null; right: DiffLine | null };
+
+/**
+ * Pair consecutive removed/added runs into aligned left/right rows so the
+ * side-by-side view keeps both columns in sync line-for-line.
+ */
+function toSideBySideRows(lines: DiffLine[]): DiffRow[] {
+  const rows: DiffRow[] = [];
+  let removed: DiffLine[] = [];
+  let added: DiffLine[] = [];
+
+  const flush = () => {
+    const count = Math.max(removed.length, added.length);
+    for (let i = 0; i < count; i++) {
+      rows.push({ left: removed[i] ?? null, right: added[i] ?? null });
+    }
+    removed = [];
+    added = [];
+  };
+
+  lines.forEach((line) => {
+    if (line.type === 'removed') {
+      removed.push(line);
+    } else if (line.type === 'added') {
+      added.push(line);
+    } else {
+      flush();
+      rows.push({ left: line, right: line });
+    }
+  });
+  flush();
+
+  return rows;
+}
+
 export const TextDiffViews: React.FC<{ tool: ToolDefinition }> = ({ tool }) => {
   const [input, setInput] = useState(tool.sampleInput || '');
   const [secondaryInput, setSecondaryInput] = useState(tool.sampleSecondaryInput || '');
@@ -182,7 +217,7 @@ export const TextDiffViews: React.FC<{ tool: ToolDefinition }> = ({ tool }) => {
         </div>
 
         <div className="flex flex-col rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs text-neutral-500 font-medium">
+          <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs text-neutral-500 font-medium">
             <span>Text Content for Analysis</span>
             <div className="flex items-center gap-3">
               <button onClick={handleClear} className="hover:text-red-500">
@@ -208,8 +243,8 @@ export const TextDiffViews: React.FC<{ tool: ToolDefinition }> = ({ tool }) => {
     return (
       <div className="space-y-4">
         {/* Diff view switch */}
-        <div className="flex items-center justify-between p-2.5 bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-lg text-xs">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 p-2.5 bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-lg text-xs">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => setDiffViewMode('split')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md font-medium transition-colors ${
@@ -234,7 +269,7 @@ export const TextDiffViews: React.FC<{ tool: ToolDefinition }> = ({ tool }) => {
             </button>
           </div>
 
-          <div className="flex items-center gap-3 text-xs">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
             <span className="flex items-center gap-1 font-mono text-emerald-600 dark:text-emerald-400">
               + {diffLines.filter((l) => l.type === 'added').length} additions
             </span>
@@ -278,17 +313,48 @@ export const TextDiffViews: React.FC<{ tool: ToolDefinition }> = ({ tool }) => {
 
         {/* Diff Result Visualizer */}
         <div className="rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-600 dark:text-neutral-400">
-            <span>Visual Diff Output</span>
+          <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-600 dark:text-neutral-400">
+            <span>Visual Diff Output ({diffViewMode === 'split' ? 'Side-by-Side' : 'Unified'})</span>
             <CopyButton
               textToCopy={diffLines.map((l) => (l.type === 'added' ? `+ ${l.value}` : l.type === 'removed' ? `- ${l.value}` : `  ${l.value}`)).join('\n')}
               label="Copy Diff Patch"
             />
           </div>
 
-          <div className="p-3 font-mono text-xs overflow-x-auto max-h-96">
+          <div className="p-3 font-mono text-xs overflow-x-auto max-h-96 overflow-y-auto">
             {diffLines.length === 0 ? (
               <div className="text-center py-8 text-neutral-400">Enter text above to compute diff</div>
+            ) : diffViewMode === 'split' ? (
+              <div className="min-w-[560px] space-y-0.5">
+                <div className="grid grid-cols-2 gap-3 pb-1.5 mb-1.5 border-b border-neutral-200 dark:border-neutral-800 text-[10px] uppercase tracking-wider font-semibold text-neutral-500">
+                  <span>Original</span>
+                  <span>Modified</span>
+                </div>
+                {toSideBySideRows(diffLines).map((row, idx) => (
+                  <div key={idx} className="grid grid-cols-2 gap-3 items-stretch">
+                    {[
+                      { line: row.left, numKey: 'oldLineNumber' as const, tint: 'bg-rose-500/10 text-rose-800 dark:text-rose-300' },
+                      { line: row.right, numKey: 'newLineNumber' as const, tint: 'bg-emerald-500/10 text-emerald-800 dark:text-emerald-300' },
+                    ].map(({ line, numKey, tint }, cellIdx) => (
+                      <div
+                        key={cellIdx}
+                        className={`flex items-start gap-2 px-2 py-0.5 rounded min-w-0 ${
+                          line === null
+                            ? 'bg-neutral-100/70 dark:bg-neutral-800/40'
+                            : line.type === 'unchanged'
+                            ? 'text-neutral-700 dark:text-neutral-400'
+                            : tint
+                        }`}
+                      >
+                        <span className="w-8 shrink-0 text-right text-neutral-400 select-none text-[10px] tabular-nums">
+                          {line ? line[numKey] || '' : ''}
+                        </span>
+                        <span className="min-w-0 flex-1 whitespace-pre-wrap break-all">{line ? line.value : '\u00a0'}</span>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
             ) : (
               <div className="divide-y divide-neutral-100 dark:divide-neutral-800/40">
                 {diffLines.map((line, idx) => {

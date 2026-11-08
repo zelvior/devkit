@@ -192,29 +192,29 @@ export function renderMarkdownToSafeHtml(markdown: string): string {
 
   // Code blocks: ```lang\ncode\n```
   html = html.replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (_, lang, code) => {
-    return `<pre class="bg-neutral-900 border border-neutral-800 rounded p-3 my-3 text-xs font-mono overflow-x-auto text-neutral-200"><code>${code.trim()}</code></pre>`;
+    return `<pre class="bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded p-3 my-3 text-xs font-mono overflow-x-auto text-neutral-800 dark:text-neutral-200"><code>${code.trim()}</code></pre>`;
   });
 
   // Inline code: `code`
-  html = html.replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-neutral-800 text-neutral-200 font-mono text-xs border border-neutral-700">$1</code>');
+  html = html.replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-200 font-mono text-xs border border-neutral-200 dark:border-neutral-700">$1</code>');
 
   // Headings
-  html = html.replace(/^### (.*$)/gim, '<h3 class="text-base font-semibold text-neutral-100 mt-4 mb-2">$1</h3>');
-  html = html.replace(/^## (.*$)/gim, '<h2 class="text-lg font-bold text-neutral-100 mt-5 mb-2 pb-1 border-b border-neutral-800">$1</h2>');
-  html = html.replace(/^# (.*$)/gim, '<h1 class="text-xl font-bold text-neutral-100 mt-6 mb-3 pb-2 border-b border-neutral-800">$1</h1>');
+  html = html.replace(/^### (.*$)/gim, '<h3 class="text-base font-semibold text-neutral-900 dark:text-neutral-100 mt-4 mb-2">$1</h3>');
+  html = html.replace(/^## (.*$)/gim, '<h2 class="text-lg font-bold text-neutral-900 dark:text-neutral-100 mt-5 mb-2 pb-1 border-b border-neutral-200 dark:border-neutral-800">$1</h2>');
+  html = html.replace(/^# (.*$)/gim, '<h1 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mt-6 mb-3 pb-2 border-b border-neutral-200 dark:border-neutral-800">$1</h1>');
 
   // Bold and italic
-  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold text-neutral-100">$1</strong>');
-  html = html.replace(/\*([^*]+)\*/g, '<em class="italic text-neutral-300">$1</em>');
+  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold text-neutral-900 dark:text-neutral-100">$1</strong>');
+  html = html.replace(/\*([^*]+)\*/g, '<em class="italic text-neutral-700 dark:text-neutral-300">$1</em>');
 
   // Blockquotes
-  html = html.replace(/^> (.*$)/gim, '<blockquote class="border-l-2 border-neutral-600 pl-3 my-2 text-neutral-400 italic">$1</blockquote>');
+  html = html.replace(/^> (.*$)/gim, '<blockquote class="border-l-2 border-neutral-300 dark:border-neutral-600 pl-3 my-2 text-neutral-600 dark:text-neutral-400 italic">$1</blockquote>');
 
   // Unordered list items
-  html = html.replace(/^\s*-\s+(.*$)/gim, '<li class="ml-4 list-disc text-neutral-300 text-sm my-0.5">$1</li>');
+  html = html.replace(/^\s*-\s+(.*$)/gim, '<li class="ml-4 list-disc text-neutral-700 dark:text-neutral-300 text-sm my-0.5">$1</li>');
 
   // Links: [text](url) - sanitized protocols only
-  html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-400 underline hover:text-blue-300">$1</a>');
+  html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 underline hover:text-blue-700 dark:hover:text-blue-300">$1</a>');
 
   // Paragraph breaks
   html = html.replace(/\n\n+/g, '<br/><br/>');

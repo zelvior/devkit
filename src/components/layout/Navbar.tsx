@@ -78,7 +78,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Zone 2: Primary nav links */}
-        <nav className="hidden lg:flex items-center gap-5 text-xs font-medium text-neutral-600 dark:text-neutral-400">
+        <nav className="hidden lg:flex items-center gap-3 xl:gap-5 text-xs font-medium text-neutral-600 dark:text-neutral-400 min-w-0">
           <button
             onClick={onNavigateHome}
             className={`transition-colors whitespace-nowrap hover:text-neutral-900 dark:hover:text-white ${
