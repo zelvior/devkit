@@ -511,6 +511,7 @@ export const WebDevViews: React.FC<{ tool: ToolDefinition }> = ({ tool }) => {
         </div>
 
         <div className="rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden">
+          <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-mono">
             <thead className="bg-neutral-100 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 text-neutral-500">
               <tr>
@@ -537,6 +538,7 @@ export const WebDevViews: React.FC<{ tool: ToolDefinition }> = ({ tool }) => {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     );

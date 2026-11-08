@@ -424,6 +424,7 @@ export const DevUtilsViews: React.FC<DevUtilsProps> = ({ tool, onNavigateTool })
               <div className="px-4 py-2.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 font-medium text-neutral-500">
                 Search Query Parameters ({parsedUrl.params.length})
               </div>
+              <div className="overflow-x-auto">
               <table className="w-full text-left font-mono">
                 <thead className="bg-neutral-100 dark:bg-neutral-950 text-neutral-400 border-b border-neutral-200 dark:border-neutral-800 text-[11px]">
                   <tr>
@@ -452,6 +453,7 @@ export const DevUtilsViews: React.FC<DevUtilsProps> = ({ tool, onNavigateTool })
                   )}
                 </tbody>
               </table>
+              </div>
             </div>
           </div>
         )}

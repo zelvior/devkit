@@ -108,7 +108,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         </div>
 
         {/* Results List */}
-        <div className="max-h-80 overflow-y-auto p-2 divide-y divide-neutral-100 dark:divide-neutral-800/40">
+        <div className="max-h-80 overflow-y-auto p-2 flex flex-col gap-1">
           {filteredTools.length === 0 ? (
             <div className="p-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
               No developer utilities found for &quot;{query}&quot;

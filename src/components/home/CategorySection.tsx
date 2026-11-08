@@ -32,6 +32,13 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     }
   };
 
+  const cardKeyHandler = (toolId: string) => (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onSelectTool(toolId);
+    }
+  };
+
   const displayedTools: ToolDefinition[] = TOOLS.filter((tool) => {
     const matchesCategory = activeCategory === 'all' || tool.category === activeCategory;
     if (!matchesCategory) return false;
@@ -115,6 +122,9 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
               <div
                 key={tool.id}
                 onClick={() => onSelectTool(tool.id)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={cardKeyHandler(tool.id)}
                 className="p-5 rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900/40 hover:border-neutral-400 dark:hover:border-neutral-700 transition-all cursor-pointer group flex flex-col justify-between"
               >
                 <div>

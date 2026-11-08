@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { TOOLS } from './config/tools';
 import { ToolDefinition } from './types';
 import {
@@ -66,7 +66,14 @@ export default function App() {
     }
   }, []);
 
-  // Hydrate preferences from IndexedDB on mount
+  // Keep a live ref so the mount-only effect below can read the current mode
+  // without re-subscribing on every theme change.
+  const themeModeRef = useRef(themeMode);
+  useEffect(() => {
+    themeModeRef.current = themeMode;
+  }, [themeMode]);
+
+  // Hydrate preferences from IndexedDB once on mount
   useEffect(() => {
     let isMounted = true;
 
@@ -92,12 +99,10 @@ export default function App() {
 
     initStorage();
 
-    // OS color scheme change listener
+    // OS color scheme change listener (only affects the "system" mode)
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleMediaChange = () => {
-      setStoredThemeMode(themeMode).then(() => {
-        if (themeMode === 'system') updateDocumentTheme('system');
-      });
+      if (themeModeRef.current === 'system') updateDocumentTheme('system');
     };
 
     if (mediaQuery.addEventListener) {
@@ -110,7 +115,7 @@ export default function App() {
         mediaQuery.removeEventListener('change', handleMediaChange);
       }
     };
-  }, [themeMode, updateDocumentTheme]);
+  }, [updateDocumentTheme]);
 
   // Handle URL hash changes
   useEffect(() => {
@@ -297,6 +302,7 @@ export default function App() {
           onNavigateHome={handleNavigateHome}
           onNavigateAllTools={handleNavigateAllTools}
           onNavigateCategories={() => {
+            window.location.hash = '#/category/all';
             setActiveCategoryId('all');
             setCurrentView('categories');
           }}
